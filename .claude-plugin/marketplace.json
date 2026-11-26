@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "github-skills",
+  "description": "Templates and style rules for PR descriptions, design docs and GitHub issues",
+  "owner": {
+    "name": "Proyecto 26"
+  },
+  "plugins": [
+    {
+      "name": "github-skills",
+      "description": "Templates and style rules for engineering writing on GitHub: pull request descriptions, technical design docs (TDD, spec, RFC), bug reports, feature requests, prioritized requests and engineering tickets. Use when the user wants to write, fill in or review any of them, or add PR and issue templates to a repo.",
+      "version": "1.0.0",
+      "source": "./"
+    }
+  ]
+}

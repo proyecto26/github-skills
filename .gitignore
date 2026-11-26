@@ -1,0 +1,14 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Claude state files
+.claude/
+
+# skill eval workspaces
+skills/*-workspace/

@@ -1,0 +1,56 @@
+{
+  "skill_name": "github-writing-templates",
+  "evals": [
+    {
+      "id": 1,
+      "name": "pr-small-bugfix",
+      "prompt": "Write the PR description for my branch and save it as pr.md. Context: issue #482 in our repo (acme/storefront). Customers on the checkout page saw the order total without the shipping discount when they applied a coupon after picking a shipping method. I spent two days on it. Turned out CartSummary memoized the totals on [items, coupon] and never recomputed when shippingMethod changed, I found it by bisecting to a refactor from March. The fix: added shippingMethod to the memo deps in src/checkout/CartSummary.tsx and added a unit test in CartSummary.test.tsx that applies a coupon after selecting shipping. No UI layout change, no flag. I tested it manually on staging too with coupon SHIP10. I pair-programmed this with Claude Code btw. This is PR 2 of 3 of the checkout cleanup, the next one removes the old totals helper.",
+      "expected_output": "A short PR description following the template: issue link, one or two plain first-person sentences, type and testing checkboxes, no root-cause story, no tool mentions, no 'PR 2 of 3'.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "tdd-saved-searches",
+      "prompt": "Write the TDD for this and save it as tdd.md. Feature: saved searches with a result count badge in our recruiting CRM (repo talentdesk/app, Rails + Postgres + OpenSearch). Issue #1290. I'm the DRI (Dana Ortiz), tech lead is Marco Ruiz, team is Search, approver is Priya Shah. Flag name SAVED_SEARCH_COUNTS. Users can save a search from the people list and see it in the sidebar with a badge showing how many people match. We decided to compute the count with a live OpenSearch count query when the sidebar loads instead of storing it, because a stored count drifts whenever people are bulk added, removed, imported or merged. We measured the count query at about 40ms p95 for the largest customer. We rejected a nightly recount job since users would see stale numbers for up to a day. New table saved_searches (id, workspace_id, user_id, name, query jsonb, created_at, updated_at) with an index on (workspace_id, user_id). No existing data to migrate and no changes to the search index mapping. Rollout is 1 week staged. I need to ask product whether a saved search should be private to the user or shared with the workspace, that blocks the schema. Dates aren't set yet. Design link: https://design.example.com/f/saved-searches",
+      "expected_output": "A TDD with every template heading filled or 'None, because', decisions only under Technical Decisions, cost described by shape not the 40ms number, real DDL, placeholders for unknown dates, a product question framed by user impact.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "generic-followup-ticket",
+      "prompt": "file a github issue for this, save it as issue.md. while working on PR #771 (export to CSV) I noticed the export job in app/jobs/export_job.rb line 58 loads every row into memory with Order.where(workspace_id: id).to_a before writing, so big workspaces (I saw one with 900k orders in staging) get the worker OOM-killed and the user just never receives the export email, no error shown. smallest fix is probably find_each with batches and streaming to the tempfile. it's not part of my PR so I don't want to fix it there. also related to #655 where someone reported missing export emails.",
+      "expected_output": "A generic engineering ticket: opening sentence saying what's wrong and who it affects, where it shows up with a link to #771, Expected/Actual, Done when checkboxes, technical detail inside a collapsible <details> Agent notes block.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "bug-report-user-facing",
+      "prompt": "write up this bug as a github issue and save it as bug.md. a customer (Northwind, workspace 2231) emailed support: when they export an invoice to PDF from the invoice detail page in our billing app, the PDF shows the amounts in USD even though the invoice is in EUR. the screen shows EUR correctly. they sent a screenshot. happens every time for them on Chrome 141, app version 4.18.2. support checked two other EUR customers and they see the same thing. they can still send the invoice by copying the numbers manually.",
+      "expected_output": "A bug report (template 3), not a generic ticket: one severity box and one reach box checked, Expected and Actual behavior, numbered steps to reproduce, environment with the version and browser, evidence naming the screenshot. No guessed root cause.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "prioritized-request-unknown-effort",
+      "prompt": "log this customer request as an issue, save it as request.md. Contoso (account ACC-0912) wants SSO via SAML for their 400 seats. their security team requires it and their renewal is on 2027-03-01, the account manager says they won't renew without it. nobody from engineering has sized it yet and product hasn't looked at it.",
+      "expected_output": "A prioritized request (template 4): requester with the account ID, a one or two sentence request, Impact left unchecked because product has not set it, Effort with only 'Size TBD' checked, the critical delivery date tied to the renewal, target start date left as a visible placeholder.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "feature-request-bulk-archive",
+      "prompt": "write a feature request issue for bulk archiving projects, save it as feature.md. today admins in our project management app have to open each project and click archive one by one, some customers have 200+ finished projects cluttering the sidebar. we want checkboxes in the projects list and an 'Archive selected' action, admins only, with a confirmation dialog saying how many will be archived. archived projects disappear from the sidebar and can be restored from the Archived tab that already exists. the projects table already has archived_at so no schema change. depends on #310 (projects list pagination). no design yet.",
+      "expected_output": "A feature request (template 5) with every heading kept: overview, problem statement table, user stories, functional requirements with user flow and acceptance criteria that someone else can verify, design marked TBD, 'No database changes', dependencies naming #310, future considerations. It says what and why, not how to implement it.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "name": "install-templates-existing-pr-template",
+      "prompt": "add the PR and issue templates to this repo so GitHub offers them when we open a PR or an issue.",
+      "expected_output": "Creates one file per issue type under .github/ISSUE_TEMPLATE/ with front matter (name, about, title, labels) and puts the TDD under docs/templates/. Because the repo already has a .github/PULL_REQUEST_TEMPLATE.md, it shows the difference and asks before replacing it.",
+      "files": [
+        ".github/PULL_REQUEST_TEMPLATE.md"
+      ]
+    }
+  ]
+}

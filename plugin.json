@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "github-skills",
+  "version": "1.0.0",
+  "description": "Templates and style rules for engineering writing on GitHub: pull request descriptions, technical design docs (TDD, spec, RFC), bug reports, feature requests, prioritized requests and engineering tickets. Use when the user wants to write, fill in or review any of them, or add PR and issue templates to a repo.",
+  "author": {
+    "name": "Proyecto 26",
+    "url": "https://github.com/proyecto26"
+  },
+  "homepage": "https://github.com/proyecto26/github-skills",
+  "repository": "https://github.com/proyecto26/github-skills",
+  "license": "MIT",
+  "keywords": [
+    "github",
+    "pull-request",
+    "issues",
+    "templates",
+    "tdd",
+    "design-doc",
+    "rfc",
+    "bug-report",
+    "feature-request",
+    "technical-writing"
+  ]
+}
