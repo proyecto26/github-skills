@@ -6,7 +6,7 @@
 [![Templates](https://img.shields.io/badge/Templates-6-brightgreen)](#templates)
 [![Skills](https://img.shields.io/badge/Skills-2-brightgreen)](#skills)
 
-<img src="https://github.com/proyecto26/sherlock-ai-plugin/blob/main/images/claude-mascot-jumping-animated.svg" width="150">
+https://github.com/user-attachments/assets/abaff284-d2c3-4cdc-9d5f-6526011c50ff
 
 **Skills for the work that surrounds code on GitHub.** Six templates for pull requests, design docs and issues with the style rules that keep them short, and a workflow for stacked pull requests. Works in Claude Code, OpenAI Codex, Cursor, GitHub Copilot CLI and any agent that reads [Agent Skills](https://agentskills.io/).
 
