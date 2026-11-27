@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.0 - 2026-11-26
+
+- New `github-stacked-prs` skill: a step-by-step workflow for splitting work into small dependent
+  pull requests with GitHub's [`gh-stack`](https://github.com/github/gh-stack) extension. It
+  installs the extension and GitHub's own `gh-stack` skill, then covers when to stack, planning
+  one issue per layer, publishing PRs with written descriptions and linking them with
+  `gh stack link`, syncing and merging from the bottom.
+- `github-writing-templates`: the PR rules point to the new skill when PRs depend on each other.
+- `scripts/check-manifests.sh` checks that both skills exist.
+- `test/stacked-prs.evals.json`: three eval prompts for the new skill.
+
 ## 1.0.0 - 2026-11-26
 
 - Initial release with the `github-writing-templates` skill: six templates (PR description,

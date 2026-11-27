@@ -10,7 +10,7 @@
 #   .agents/plugins/marketplace.json entry source/path/policy (Codex / Copilot)
 #   .claude-plugin/marketplace.json entry source (Claude — strict:true + auto-discovery)
 #   .codex-plugin/plugin.json required fields and skills pointer
-#   skills/github-writing-templates/SKILL.md exists
+#   skills/github-writing-templates/SKILL.md and skills/github-stacked-prs/SKILL.md exist
 # and runs the real host validators that exist: `claude plugin validate` and the
 # Agent Plugins 1.0.0 JSON schema (needs python jsonschema + network; skipped otherwise).
 # Codex and Copilot publish no validator; their manifests get structural checks only.
@@ -111,8 +111,9 @@ for f in ("name", "version", "description"):
     if not codex.get(f):
         errors.append(f".codex-plugin/plugin.json is missing required field '{f}'")
 
-if not os.path.isfile("skills/github-writing-templates/SKILL.md"):
-    errors.append("skills/github-writing-templates/SKILL.md not found — every host discovers the skill from this path")
+for skill in ("github-writing-templates", "github-stacked-prs"):
+    if not os.path.isfile(f"skills/{skill}/SKILL.md"):
+        errors.append(f"skills/{skill}/SKILL.md not found — every host discovers the skill from this path")
 
 # Structural guard: the plugin root the catalog entries point at ('./') must actually
 # contain the plugin payload, so a green gate cannot mean an empty install target.

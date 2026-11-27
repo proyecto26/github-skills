@@ -84,6 +84,7 @@ Rules for PR descriptions:
 - A small fix is one sentence. Don't explain how the code works, repeat the issue, tell the root-cause story, list out-of-scope items, or say "PR X of N". The reviewer reads the code, and the story already lives in the issue.
 - When the user supplies a long debugging story, it stays out. If part of it matters for the future, suggest adding it to the issue.
 - Screenshots can't be generated: leave a clear placeholder naming what to capture.
+- When PRs depend on each other, publish them as a stack: follow the `github-stacked-prs` skill if it is installed.
 
 ## 2. TDD / Spec
 

@@ -1,0 +1,26 @@
+{
+  "skill_name": "github-stacked-prs",
+  "evals": [
+    {
+      "id": 1,
+      "name": "split-connected-fixes",
+      "prompt": "I have five fixes for the booking flow, each with its own issue (#3 to #7). They all touch the same endpoint and the changelog. Open them as small PRs, max 200 lines each.",
+      "expected_output": "Checks for the gh-stack extension and installs it (and GitHub's gh-stack skill) only if missing, saying so. Proposes one branch per issue in dependency order and waits for approval. Shows the PR titles and descriptions before publishing. Creates the PRs with each one based on the branch below, each body starting with 'closes #<n>', links them with 'gh stack link' bottom to top and returns the stack URL. Does not merge.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "independent-prs-not-stacked",
+      "prompt": "Open two PRs: one fixes a typo in the README and the other bumps the Python version in the Dockerfile. Stack them.",
+      "expected_output": "Points out that the two changes are independent and recommends opening both against the trunk so they can merge in any order, explaining that a stack forces an order. Stacks them only if the user insists.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "review-change-in-lower-layer",
+      "prompt": "The reviewer asked for a rename in the second PR of my stack of four. I'm on the top branch. Make the change.",
+      "expected_output": "Checks out the branch that owns the change instead of committing on the top branch, commits there, replays the layers above with 'gh stack rebase --upstack', runs the tests on the rebased layers, pushes the stack and returns to the top. Uses non-interactive command forms and reports what was not re-tested.",
+      "files": []
+    }
+  ]
+}

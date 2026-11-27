@@ -4,10 +4,11 @@
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Plugin-blueviolet)](https://code.claude.com/docs/en/plugins)
 [![Agent Plugins](https://img.shields.io/badge/Agent_Plugins-1.0-blue)](https://agent-plugins.org/)
 [![Templates](https://img.shields.io/badge/Templates-6-brightgreen)](#templates)
+[![Skills](https://img.shields.io/badge/Skills-2-brightgreen)](#skills)
 
 <img src="https://github.com/proyecto26/sherlock-ai-plugin/blob/main/images/claude-mascot-jumping-animated.svg" width="150">
 
-**Skills for the writing that surrounds code on GitHub.** Six templates for pull requests, design docs and issues, plus the style rules that keep them short. Works in Claude Code, OpenAI Codex, Cursor, GitHub Copilot CLI and any agent that reads [Agent Skills](https://agentskills.io/).
+**Skills for the work that surrounds code on GitHub.** Six templates for pull requests, design docs and issues with the style rules that keep them short, and a workflow for stacked pull requests. Works in Claude Code, OpenAI Codex, Cursor, GitHub Copilot CLI and any agent that reads [Agent Skills](https://agentskills.io/).
 
 The idea behind all of them: reviewers read the diff and the linked issue already holds the context, so the text only carries what those two don't show.
 
@@ -73,9 +74,18 @@ The skill picks the template, fills it in from the diff and the linked issue, an
 
 ---
 
+## Skills
+
+| Skill | What it does |
+|:------|:-------------|
+| [`github-writing-templates`](skills/github-writing-templates/SKILL.md) | Six templates and the style rules for PRs, design docs and issues |
+| [`github-stacked-prs`](skills/github-stacked-prs/SKILL.md) | Splits work into small dependent PRs with GitHub's [`gh-stack`](https://github.com/github/gh-stack) extension |
+
+---
+
 ## Templates
 
-All six live in one skill, [`github-writing-templates`](skills/github-writing-templates/SKILL.md).
+All six templates live in `github-writing-templates`.
 
 | # | Template | Use it for |
 |:--|:---------|:-----------|
@@ -102,6 +112,26 @@ The skill can also commit the blank templates so GitHub offers them automaticall
 
 ---
 
+## Stacked PRs
+
+[`github-stacked-prs`](skills/github-stacked-prs/SKILL.md) is the workflow for a chain of small pull requests that build on each other. It sets up GitHub's official tooling and adds the steps around it:
+
+```bash
+gh extension install github/gh-stack   # the CLI extension
+gh skill install github/gh-stack       # GitHub's command reference for agents
+```
+
+1. Write one issue per problem.
+2. Plan one branch per issue, foundations at the bottom, and agree a size limit.
+3. Build bottom to top. Each layer passes the tests by itself.
+4. Review the PR texts, then create each PR based on the branch below it.
+5. Link them with `gh stack link <pr> <pr> ...` and share the stack URL.
+6. `gh stack sync` after changes, `gh stack merge <pr> --yes` from the bottom when approved.
+
+Independent changes are not stacked: they go straight to the trunk so they can merge in any order.
+
+---
+
 ## Usage Examples
 
 **"Open a PR for this branch"**
@@ -116,6 +146,9 @@ The skill can also commit the blank templates so GitHub offers them automaticall
 **"File a ticket for the N+1 I found in the export job, it's not part of my PR"**
 > Writes a generic engineering ticket with the technical detail in a collapsible section.
 
+**"Split these five fixes into small PRs, they all touch the same endpoint"**
+> Plans one branch per issue, shows the PR texts, opens the PRs as a linked stack and returns its URL.
+
 **"Add PR and issue templates to this repo"**
 > Creates the files under `.github/` and asks before replacing existing ones.
 
@@ -124,7 +157,7 @@ The skill can also commit the blank templates so GitHub offers them automaticall
 ## Standards
 
 This plugin follows the [Agent Plugins](https://agent-plugins.org/) v1.0.0 packaging standard
-(root [`plugin.json`](./plugin.json), validated against the official schema) and its skill follows
+(root [`plugin.json`](./plugin.json), validated against the official schema) and its skills follow
 the [Agent Skills](https://agentskills.io/) spec. It also ships the Claude Code manifests
 (`.claude-plugin/`) and the OpenAI Codex manifests (`.codex-plugin/`, `.agents/plugins/`).
 Portable clients read the root `plugin.json`, and each host reads its own folder.
@@ -148,12 +181,15 @@ github-skills/
 ├── .agents/plugins/
 │   └── marketplace.json             # Codex marketplace catalog
 ├── skills/
-│   └── github-writing-templates/
-│       └── SKILL.md                 # The six templates and the style rules
+│   ├── github-writing-templates/
+│   │   └── SKILL.md                 # The six templates and the style rules
+│   └── github-stacked-prs/
+│       └── SKILL.md                 # Stacked PR workflow with gh-stack
 ├── scripts/
 │   └── check-manifests.sh           # Release gate for the manifests
 ├── test/
-│   └── evals.json                   # Eval prompts for the skill
+│   ├── evals.json                   # Eval prompts for github-writing-templates
+│   └── stacked-prs.evals.json       # Eval prompts for github-stacked-prs
 ├── CHANGELOG.md
 ├── LICENSE
 └── README.md

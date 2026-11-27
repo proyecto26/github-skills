@@ -1,7 +1,7 @@
 {
   "name": "github-skills",
-  "version": "1.0.0",
-  "description": "Templates and style rules for engineering writing on GitHub: pull request descriptions, technical design docs (TDD, spec, RFC), bug reports, feature requests, prioritized requests and engineering tickets. Use when the user wants to write, fill in or review any of them, or add PR and issue templates to a repo.",
+  "version": "1.1.0",
+  "description": "Templates and style rules for engineering writing on GitHub (pull request descriptions, design docs, bug reports, feature requests, prioritized requests and engineering tickets) and a workflow for stacked pull requests with the gh-stack extension. Use when the user wants to write, fill in or review any of them, add PR and issue templates to a repo, or split work into small dependent PRs.",
   "author": {
     "name": "Proyecto 26",
     "url": "https://github.com/proyecto26"
@@ -19,6 +19,8 @@
     "rfc",
     "bug-report",
     "feature-request",
-    "technical-writing"
+    "technical-writing",
+    "stacked-prs",
+    "gh-stack"
   ]
 }
